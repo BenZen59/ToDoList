@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { v4 } from 'uuid';
+import { FcPlus } from 'react-icons/fc';
 import AddTask from '../AddTask/AddTask';
 
 function FormToDo() {
@@ -22,6 +23,12 @@ function FormToDo() {
     setListTask((oldArray) => [...oldArray, { name: nametask }]);
   };
 
+  const removeTask = (key) => {
+    const newTask = [...listTask];
+    newTask.splice(key, 1);
+    setListTask(newTask);
+  };
+
   return (
     <div className='bg-gradient-to-r from-blue-500 to-pink-500 h-[1080px] pt-[50px]'>
       <div className='bg-gray-200 w-[330px] p-2 ml-[40%] rounded-lg shadow-2xl'>
@@ -35,19 +42,16 @@ function FormToDo() {
               id='name'
               name='name'
               placeholder='Add task'
-              className='border-solid border-2 border-black font-normal pl-1 ml-[20px]	'
+              className='border-solid border-2 border-black font-normal ml-[20px]	'
             />
           </label>
 
-          <button
-            className='border-solid border-2 border-black mt-4 p-[0.2px] w-[30px] ml-2 bg-black text-white'
-            onClick={addTask}
-          >
-            +
+          <button onClick={addTask}>
+            <FcPlus className='ml-[10px]' />
           </button>
         </form>
         {listTask.map((event) => (
-          <AddTask name={event.name} key={v4()} />
+          <AddTask name={event.name} key={v4()} removeTask={removeTask} />
         ))}
       </div>
     </div>
